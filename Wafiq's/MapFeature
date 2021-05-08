@@ -1,0 +1,17 @@
+install.packages("tidyverse")
+install.packages("leaflet")
+
+library("tidyverse")
+library("leaflet")
+myCity <- read_csv("/Users/aimanwafiqbinappandi/Downloads/myCity.xlsx")
+
+myCity %>%
+  leaflet() %>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "World Imagery") %>%
+  addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite") %>%
+  addLayersControl(baseGroups = c("Toner Lite", "World Imagery")) %>%
+  addMarkers(label = myCity$myCity,
+             clusterOptions = markerClusterOptions(),
+             ) %>%
+  setView(lat = 3.1478, lng = 101.6953, zoom = 7)
+
