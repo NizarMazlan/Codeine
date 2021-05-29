@@ -1,0 +1,32 @@
+---
+title: "MapTest"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+library(leaflet)
+my_map <- leaflet() %>%
+  addTiles()
+my_map
+```
+
+
+## Map
+```{r, echo=FALSE}
+library(leaflet)
+my_map <- leaflet() %>%
+  addTiles()
+my_map
+```
+
+
+```{r, eval=FALSE}
+library(leaflet)
+my_map <- my_map %>%
+  addMarkers(lat=)
+my_map
+```
