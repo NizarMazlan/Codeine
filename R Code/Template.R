@@ -38,32 +38,20 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                   tabPanel("Statistics", "This panel shows the statistics of drug
                            addicts by categories.",
                            sidebarPanel(
-                             # choose the color of bar
-                             selectInput(inputId="color1",label="Choose Color",
-                                         choices = c("Red"="Red","Blue"="Blue","Green"="Green"),
-                                         selected = "Green",multiple = F),
-                             # choose color of border
-                             radioButtons(inputId = "border1",label = "Select Border",
-                                          choices = c("Black"="#000000","White"="#ffffff")),
-                             
                              # choose the type of dataset
                              selectInput(inputId ="channel1", label = "Choose Dataset",
-                                         choices = c("Occupation","Academic","Gender","Age")),
-                             
-                             # choose range of year
-                             sliderInput(inputId = "yearRange",
-                                         label = "Range (Years):",
-                                         min = 2017,
-                                         max = 2019,
-                                         value = 3)
+                                         choices = c("Occupation"="occ",
+                                                     "Academic"="acd",
+                                                     "Gender"="gen",
+                                                     "Age"="age")),
+                             checkboxInput("chAverage", "Average", FALSE)
                              
                            ),
                            
                            
-                           
                            # main panel for displaying histogram
                            mainPanel(
-                             plotOutput(outputId = "distPlot")
+                             plotOutput("barPlot")
                            )
                            
                            
@@ -83,20 +71,161 @@ server <- function(input, output) {
   
   # output under Statistics tab
   # output choosing bar color
-  output$distPlot <- renderPlot({
-    if(input$color1=="Red"){
-      sColor = "#ff3300"
-    }else if(input$color1=="Blue"){
-      sColor = "#3399ff"
-    }else if(input$color1=="Green"){
-      sColor = "#66ff33"
+  output$barPlot <- renderPlot({
+    if(input$channel1 == "occ"){
+      if(input$chAverage == TRUE){
+        # Sort data
+        bar <- occupationData$Occupation
+        val <- occupationData$Average
+        
+        df <- data.frame(bar,val)
+        
+        
+        
+        # Bar chart
+        ggplot(data = df, aes(x = reorder(bar, val), y = val)) +
+          geom_bar(stat='identity',aes(fill = val) )+ 
+          coord_flip() +
+          ggtitle("Drug Addicts in Malaysia Sorted by Occupation") +
+          xlab("Occupation") +
+          ylab("Average Count from 2017-2019") +
+          scale_fill_gradient("Average", low="darkolivegreen1",high="deepskyblue3") +
+          theme_bw(base_size = 15)
+      }else{
+        # Sort data
+        df <- data.frame(
+          Y2017 = occupationData$X2017,
+          Y2018 = occupationData$X2018,
+          Y2019 = occupationData$X2019,
+          
+          Occupation = as.factor(occupationData$Occupation)
+        )
+        
+        # Gather and Update data frame
+        df_new <- df %>%
+          gather("Year", "Count", -Occupation)
+        
+        
+        # Plotting Multiple Bar Graph
+        p <- ggplot(df_new, aes(Occupation, y = Count, 
+                           fill = Year)) +
+          ggtitle("Drug Addicts in Malaysia Sorted by Occupation from Year 2017 until 2019") +
+          xlab("Year") +
+          ylab("Average Count from 2017-2019") +
+          geom_col(position = "dodge", stat='identity') + 
+          geom_text(aes(label=Count), vjust=0.3, color="black",
+                    position = position_dodge(0.9))
+        p + coord_flip()
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$chAverage == TRUE){
+        bar <- academicData$Academic_Qualification
+        val <- mean(c(academicData$x2017,academicData$x2018,academicData$x2019))
+        
+        df <- data.frame(bar,val)
+        
+        # Multiple Bar Chart
+        ggplot(data = df, aes(x = reorder(bar, val), y = val)) +
+          geom_bar(stat='identity',aes(fill = val) )+ 
+          coord_flip() +
+          ggtitle("Average of Drug Addicts in Malaysia Sorted by 
+                  Academic Qualification From Year 2017 until 2019") +
+          xlab("Academic Qualification") +
+          ylab("Average Count from 2017-2019") +
+          scale_fill_gradient("Average", low="darkolivegreen1",high="deepskyblue3") +
+          theme_bw(base_size = 15)
+        
+      }else{
+        # Sort data
+        df <- data.frame(
+          Y2017 = academicData$X2017,
+          Y2018 = academicData$X2018,
+          Y2019 = academicData$X2019,
+          Qualification = as.factor(academicData$Academic_Qualification)
+        )
+        
+        # Gather and Update data frame
+        df_new <- df %>%
+          gather("Year", "Count", -Qualification)
+        
+        # Plotting Multiple Bar Graph
+        ggplot(df_new, aes(Qualification, y = Count, 
+                           fill = Year)) +
+          ggtitle("Drug Addicts in Malaysia Sorted by Academic Qualification from Year 2017 until 2019") +
+          xlab("Academic Qualification") +
+          ylab("Average Count from 2017-2019") +
+          geom_col(position = "dodge", stat='identity') + 
+          geom_text(aes(label=Count), vjust=-0.25, color="black",
+                    position = position_dodge(0.9))
+      }
+      
+    }else if(input$channel1 == "age"){
+      if(input$chAverage == TRUE){
+        bar <- ageData$Age
+        val <- mean(c(ageData$x2017,ageData$x2018,ageData$x2019))
+        
+        df <- data.frame(bar,val)
+        
+        # Multiple Bar Chart
+        ggplot(data = df, aes(x = reorder(bar, val), y = val)) +
+          geom_bar(stat='identity',aes(fill = val) )+ 
+          coord_flip() +
+          ggtitle("Average of Drug Addicts in Malaysia Sorted by 
+                  Range of Age From Year 2017 until 2019") +
+          xlab("Range of Age") +
+          ylab("Average Count from 2017-2019") +
+          scale_fill_gradient("Average", low="darkolivegreen1",high="deepskyblue3") +
+          theme_bw(base_size = 15)
+      }else{
+        # Sort data
+        df <- data.frame(
+          Y2017 = ageData$X2017,
+          Y2018 = ageData$X2018,
+          Y2019 = ageData$X2019,
+          Range = as.factor(ageData$Age)
+        )
+        
+        # Gather and Update data frame
+        df_new <- df %>%
+          gather("Year", "Count", -Range)
+        
+        # Plotting Multiple Bar Graph
+        ggplot(df_new, aes(Range, y = Count, 
+                           fill = Year)) +
+          ggtitle("Drug Addicts in Malaysia Sorted by Age from Year 2017 until 2019") +
+          xlab("Age Range") +
+          ylab("Count from 2017-2019") +
+          geom_col(position = "dodge", stat='identity') + 
+          geom_text(aes(label=Count), vjust=-0.25, color="black",
+                    position = position_dodge(0.9))
+      }
+      
+    }else{#gender
+      if(input$chAverage == TRUE){
+        # Sort data
+        df <- data.frame(
+          Male = genderData$Average_M,
+          Female = genderData$Average_F,
+          State = as.factor(genderData$States)
+        )
+        
+        # Gather and Update data frame
+        df_new <- df %>%
+          gather("Gender", "Average", -State)
+        
+        # Plotting Multiple Bar Graph
+        p <- ggplot(df_new, aes(reorder(State,Average), y = Average, fill = Gender)) +
+          geom_col(position = "dodge", stat='identity') + 
+          geom_text(aes(label=Average), vjust=0.3, color="black",
+                    position = position_dodge(0.93))
+        
+        p + coord_flip()
+      }else{
+        
+      }
     }
-    
-    
   })
-  
-  # output under statistics tab
-  # output choose dataset
 
   
   
