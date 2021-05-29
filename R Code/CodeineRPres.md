@@ -1,0 +1,58 @@
+Drug Addiction Hotspot
+========================================================
+
+<p>Group Member
+  <br/>
+  - Mohamad Nizar Mustaqeem Bin Mazlan (17206540)
+  <br/>
+  - Siti Norhidayah Binti Abdul Bari Arbee (17206657)
+  <br/>
+  - Aiman Wafiq Bin Appandi (17204090)
+  <br/>
+  - Irfan Abidin As Salik Bin Noor Riza Al Jeffery (17204593)
+  <br/>
+</p>
+
+  
+========================================================
+
+## Objective
++ To identify patterns of drug addicts' trends from 2017 to 2019 in Malaysia.
++ To show the graph illustration of drug addicts by occupation.
++ To display drug addicts according to their age.
++ To monitor the graphical presentation of drug addicts by gender.
++ To display drug addicts based on academic qualifications.
+
+========================================================
+
+## How do we come to Drug Addiction Project
+### Problem statement
+The use, misuse, and abuse of substances and drugs among adolescents and youngsters has been found to be on the rise. Because there hasn't been much research done in Malaysia to analyze this issue. 
+
+### Solution
+Drug abuse is a complex issue and has been a serious public health problem in Malaysia. As a result, we created this project to spread awareness among Malaysians.
+
+==========================================================
+
+## Features that we have acquired from the dataset
+- Drug addicts by type of occupation, Malaysia, 2017-2019.
+- Drug addicts by academic qualification, Malaysia, 2017-2019		
+- Drug addicts by age, Malaysia, 2017-2019		
+- Drug addicts by gender, Malaysia, 2017-2019		
+
+
+The dataset we used in this project is available at:
+
+[Click here to see the dataset](https://www.adk.gov.my/en/public/drugs-statistics/)
+
+==========================================================
+
+## Resources
+
+Mohamed, M., Marican, S., Elias, N., & Don, Y. (n.d.). PATTERN OF SUBSTANCE AND DRUG MISUSE AMONG YOUTH IN MALAYSIA. Retrieved from website: https://www.adk.gov.my/wp-content/uploads/1.pdf
+
+Drugs Statistics – Laman Web Rasmi Agensi Anti Dadah Kebangsaan. (2020). Retrieved May 28, 2021, from Adk.gov.my website: https://www.adk.gov.my/en/public/drugs-statistics/
+
+Wan Sulaiman, W. M. S., Ismail, Z., Wan Sulaiman, W. S., & Muhamat@Kawangit, R. (2021). Self-Control as Predictor of Hope among Drug Addicts in Malaysian Rehabilitation Centers. International Journal of Academic Research in Business and Social Sciences, 11(3). https://doi.org/10.6007/ijarbss/v11-i3/8655
+
+===========================================================
