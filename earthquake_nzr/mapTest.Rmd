@@ -26,7 +26,24 @@ my_map
 
 ```{r, eval=FALSE}
 library(leaflet)
-my_map <- my_map %>%
-  addMarkers(lat=)
+my_map <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(lat=5.841292, lng=116.043446, popup="Rumah Nizar")
 my_map
+```
+
+
+```{r, echo=FALSE}
+library(leaflet)
+set.seed(2016-04-25)
+lat <- c(3.1478,4.6,5.3942,3.8167,3.0833,1.4556,6.1333,2.1889,5.975,2.7297,1.5397,5.3303,6.1167,2.914,6.4414,5.2803)
+lng <- c(101.6953,101.07,100.3664,103.3333,101.5333,103.7611,102.25,102.2511,116.0725,101.9381,110.3542,103.1408,100.3667,101.7019,100.1986,115.2475
+)
+
+df <- data.frame(lat, lng)
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers()
+
 ```

@@ -3,14 +3,20 @@ library(shiny)
 library(shinythemes)
 library(ggplot2)
 library(plyr)
+library(tidyr)
 library(dplyr)
+library(leaflet)
+library(readxl)
+
 
 # Data preparation
-setwd("C:/R Studio/First Shiny App")
+setwd("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest")
 occupationData <- read.csv("01-Occupation.csv")
-#genderData <- read.csv("02-Gender.csv")
-#ageData <- read.csv("03-Age.csv")
-#academicData <- read.csv("04-Academic.csv")
+genderData <- read.csv("02-Gender.csv")
+ageData <- read.csv("03-Age.csv")
+academicData <- read.csv("04-Academic.csv")
+ppd <- read_excel("Lokasi-Pusat-Pemulihan-Dadah.xlsx")
+namaTempat <- ppd$Institusi
 
 # Define UI
 ui <- fluidPage(theme = shinytheme("superhero"),
@@ -34,7 +40,9 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                            ) # mainPanel
                            
                   ), # Navbar 1, tabPanel
-                  tabPanel("Allocation", "This panel is intentionally left blank"),
+                  tabPanel("Allocation", "This panel is intentionally left blank",
+                           leafletOutput("myMap"),
+                           p()),
                   tabPanel("Statistics", "This panel shows the statistics of drug
                            addicts by categories.",
                            sidebarPanel(
@@ -64,6 +72,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
 
 # Define server function  
 server <- function(input, output) {
+  
   
   output$txtout <- renderText({
     paste( input$txt1, input$txt2, sep = " " )
