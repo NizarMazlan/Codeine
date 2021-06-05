@@ -41,8 +41,11 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                            
                   ), # Navbar 1, tabPanel
                   tabPanel("Allocation", "This panel is intentionally left blank",
-                           leafletOutput("myMap"),
-                           p()),
+                           leaflet(data=ppd) %>%
+                             addProviderTiles("Esri.WorldImagery") %>%
+                             addMarkers(lng = ~ Longitud, lat = ~ Latitud,
+                                        clusterOptions = markerClusterOptions(),
+                                        popup = namaTempat)),
                   tabPanel("Statistics", "This panel shows the statistics of drug
                            addicts by categories.",
                            sidebarPanel(
