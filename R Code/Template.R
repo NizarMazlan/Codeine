@@ -7,6 +7,9 @@ library(tidyr)
 library(dplyr)
 library(leaflet)
 library(readxl)
+library(tidyverse) #for bubble graph
+library(shinydashboard) #for bubble graph
+library(bubbles) #for bubble graph
 
 
 # Data preparation
@@ -15,14 +18,24 @@ occupationData <- read.csv("01-Occupation.csv")
 genderData <- read.csv("02-Gender.csv")
 ageData <- read.csv("03-Age.csv")
 academicData <- read.csv("04-Academic.csv")
+negeriData <- read.csv("negeriData.csv")
 ppd <- read_excel("Lokasi-Pusat-Pemulihan-Dadah.xlsx")
-namaTempat <- ppd$Institusi
+namaTempat <- ppd$Institution
+listppd <- read_excel("Alamat-Pusat-Pemulihan.xlsx")
+
+#total for total cases
+total2014 = sum(negeriData$X2014)
+total2015 = sum(negeriData$X2015)
+total2016 = sum(negeriData$X2016)
+total2017 = sum(negeriData$X2017)
+total2018 = sum(negeriData$X2018)
+total2019 = sum(negeriData$X2019)
 
 # Define UI
-ui <- fluidPage(theme = shinytheme("superhero"),
+ui <- fluidPage(theme = shinytheme("yeti"),
                 navbarPage(
                   theme = "superhero",  
-                  "DRUGGER-tune",
+                  "Codeine",
                   # Embed R Markdown under this tab
                   tabPanel("About",
                            sidebarPanel(
@@ -40,12 +53,28 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                            ) # mainPanel
                            
                   ), # Navbar 1, tabPanel
-                  tabPanel("Allocation", "This panel is intentionally left blank",
-                           leaflet(data=ppd) %>%
-                             addProviderTiles("Esri.WorldImagery") %>%
-                             addMarkers(lng = ~ Longitud, lat = ~ Latitud,
-                                        clusterOptions = markerClusterOptions(),
-                                        popup = namaTempat)),
+                  tabPanel("By State", "This panel shows the bubble graph for states",
+                           fluidRow(
+                             valueBoxOutput("T2014"),
+                             valueBoxOutput("T2015"),
+                             valueBoxOutput("T2016"),
+                             valueBoxOutput("T2017"),
+                             valueBoxOutput("T2018"),
+                             valueBoxOutput("T2019")
+                           ),
+                           
+                           fluidRow(
+                             sidebarPanel(
+                               sliderInput(inputId = "bubbleYear", label = "Choose Year", min = 2014, max = 2019, value = 2014),
+                             ),
+                             box(
+                               width = 8, status = "info", solidHeader = TRUE,
+                               title = "Drug Addicts by States in Malaysia",
+                               bubblesOutput("bubbleDrug", width = "100%", height = 600)
+                             )
+                           )
+                           
+                  ),
                   tabPanel("Statistics", "This panel shows the statistics of drug
                            addicts by categories.",
                            sidebarPanel(
@@ -59,15 +88,22 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                              
                            ),
                            
-                           
                            # main panel for displaying histogram
                            mainPanel(
                              plotOutput("barPlot")
                            )
+                  ),
+                  tabPanel("Locations of Rehab Centre", "This panel shows the locations of Drug Rehabilitation Centre in Malaysia.",
                            
-                           
-                           )
-                           
+                           leaflet(data=ppd) %>%
+                             addProviderTiles("Esri.WorldImagery") %>%
+                             addMarkers(lng = ~ Longitud, lat = ~ Latitud,
+                                        clusterOptions = markerClusterOptions(),
+                                        popup = namaTempat),
+                           fluidRow(
+                             column(12, dataTableOutput('table'))
+                           ))
+                  
                   
                 ) # navbarPage
 ) # drugPage
@@ -77,9 +113,95 @@ ui <- fluidPage(theme = shinytheme("superhero"),
 server <- function(input, output) {
   
   
+  #output table 
+  output$table <- renderDataTable(listppd)
+  
   output$txtout <- renderText({
     paste( input$txt1, input$txt2, sep = " " )
   })
+  
+  # The # of "2014"
+  output$T2014 <- renderValueBox({
+    valueBox(
+      value = format(total2014, big.mark=","),
+      subtitle = "Total # of 2014",
+      color = "aqua" 
+    )
+  })
+  
+  # The # of "2015"
+  output$T2015 <- renderValueBox({
+    valueBox(
+      value = format(total2015, big.mark=","),
+      subtitle = "Total # of 2015"
+    )
+  })
+  
+  # The # of "2016"
+  output$T2016 <- renderValueBox({
+    valueBox(
+      value = format(total2016, big.mark=","),
+      subtitle = "Total # of 2016"
+    )
+  }) 
+  
+  # The # of "2017"
+  output$T2017 <- renderValueBox({
+    valueBox(
+      value = format(total2017, big.mark=","),
+      subtitle = "Total # of 2017"
+    )
+  })
+  
+  # The # of "2018"
+  output$T2018 <- renderValueBox({
+    valueBox(
+      value = format(total2018, big.mark=","),
+      subtitle = "Total # of 2018"
+    )
+  })
+  
+  # The # of "2019"
+  output$T2019 <- renderValueBox({
+    valueBox(
+      value = format(total2019, big.mark=","),
+      subtitle = "Total # of 2019"
+    )
+  })
+  
+  # The bubble drug plot
+  output$bubbleDrug <- renderBubbles({
+    if (nrow(negeriData) == 0)
+      return()
+    if(input$bubbleYear == 2014){
+      bubbles(value = negeriData$X2014, 
+              label = negeriData$Negeri,
+              # label = element_text(size = 10, face ="bold", colour ="black"),
+              color = rainbow(16, alpha=NULL)[sample(16)] )
+    }else if(input$bubbleYear == 2015){
+      bubbles(value = negeriData$X2015, 
+              label = negeriData$Negeri, 
+              color = rainbow(16, alpha=NULL)[sample(16)] )
+    }else if(input$bubbleYear == 2016){
+      bubbles(value = negeriData$X2016, 
+              label = negeriData$Negeri, 
+              color = rainbow(16, alpha=NULL)[sample(16)] )
+    }else if(input$bubbleYear == 2017){
+      bubbles(value = negeriData$X2017, 
+              label = negeriData$Negeri, 
+              color = rainbow(16, alpha=NULL)[sample(16)] )
+    }else if(input$bubbleYear == 2018){
+      bubbles(value = negeriData$X2018, 
+              label = negeriData$Negeri, 
+              color = rainbow(16, alpha=NULL)[sample(16)] )
+    }else if(input$bubbleYear == 2019){
+      bubbles(value = negeriData$X2019, 
+              label = negeriData$Negeri, 
+              color = rainbow(16, alpha=NULL)[sample(16)] )
+    }
+    
+  })
+  
   
   # output under Statistics tab
   # output choosing bar color
@@ -120,7 +242,7 @@ server <- function(input, output) {
         
         # Plotting Multiple Bar Graph
         p <- ggplot(df_new, aes(Occupation, y = Count, 
-                           fill = Year)) +
+                                fill = Year)) +
           ggtitle("Drug Addicts in Malaysia Sorted by Occupation from Year 2017 until 2019") +
           xlab("Year") +
           ylab("Average Count from 2017-2019") +
@@ -238,7 +360,7 @@ server <- function(input, output) {
       }
     }
   })
-
+  
   
   
   
