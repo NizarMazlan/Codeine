@@ -1,4 +1,5 @@
 # Load R packages
+library(png)
 library(shiny)
 library(shinythemes)
 library(ggplot2)
@@ -32,28 +33,47 @@ total2018 = sum(negeriData$X2018)
 total2019 = sum(negeriData$X2019)
 
 # Define UI
-ui <- fluidPage(theme = shinytheme("yeti"),
+ui <- fluidPage(shinythemes::themeSelector(),
                 navbarPage(
                   theme = "superhero",  
                   "Codeine",
                   # Embed R Markdown under this tab
-                  tabPanel("About",
+                  tabPanel("Home",
                            sidebarPanel(
-                             tags$h3("Input:"),
-                             textInput("txt1", "Given Name:", ""),
-                             textInput("txt2", "Surname:", ""),
-                             
-                           ), # sidebarPanel
+                             h2("Codeine"),
+                             p("Our Group name is Codeine, we chose this name because it is a type of weak drug that is used as a pain reliever and cough supressent"),
+                             br(),
+                             br(),
+                             HTML('<center><img src="logoCodeine.png", height = 200, width = 200></center>')
+                           ),
                            mainPanel(
-                             h1("History of Drug Addicts in Malaysia"),
-                             
-                             h4("In this panel, we embed the R Markdown"),
+                             h1("Hello fellow Malaysian"),
+                             p("This website is created by us to help Malaysians understand fully situation of drug addiction in Malaysia. We hope that everyone have awareness on this issue and take action that drug addiction is avoidable. "),
+                             br(),
+                             br(),
+                             strong(h3("How do we come to Drug Addiction Project ?")),
+                             strong(h4("Problem statement")),
+                             p("The use, misuse, and abuse of substances and drugs among adolescents and youngsters has been found to be on the rise. Because there hasn't been much research done in Malaysia to analyze this issue."),
+                             br(),
+                             strong(h4("Solution")),
+                             p("Drug abuse is a complex issue and has been a serious public health problem in Malaysia. As a result, we created this project to spread awareness among Malaysians."),
+                             br(),
+                             br(),
+                             strong(h3("Objective")),
+                             p("- To identify patterns of drug addicts' trends from 2017 to 2019 in Malaysia"),
+                             p("- To show the graph illustration of drugs addicts by occupation"),
+                             p("- To display drug addicts according to their age"),
+                             p("- To monitor graphical presentation of drug addicts by gender"),
+                             p("- To display drug addicts based on academic qualifications"),
+                             p("- To display the places where drug addicts can get professional help"),
                              verbatimTextOutput("txtout"),
+                             
                              
                            ) # mainPanel
                            
                   ), # Navbar 1, tabPanel
-                  tabPanel("By State", "This panel shows the bubble graph for states",
+                  tabPanel("By State", 
+                           h3("This panel shows the bubble graph for states"),
                            fluidRow(
                              valueBoxOutput("T2014"),
                              valueBoxOutput("T2015"),
@@ -75,8 +95,9 @@ ui <- fluidPage(theme = shinytheme("yeti"),
                            )
                            
                   ),
-                  tabPanel("Statistics", "This panel shows the statistics of drug
-                           addicts by categories.",
+                  tabPanel("Statistics", 
+                    h4("This panel shows the statistics of drug
+                           addicts by categories."),
                            sidebarPanel(
                              # choose the type of dataset
                              selectInput(inputId ="channel1", label = "Choose Dataset",
@@ -93,16 +114,30 @@ ui <- fluidPage(theme = shinytheme("yeti"),
                              plotOutput("barPlot")
                            )
                   ),
-                  tabPanel("Locations of Rehab Centre", "This panel shows the locations of Drug Rehabilitation Centre in Malaysia.",
+                  tabPanel("Locations of Rehab Centre",
+                           h3("This panel shows the locations of Drug Rehabilitation Centre in Malaysia."),
                            
                            leaflet(data=ppd) %>%
                              addProviderTiles("Esri.WorldImagery") %>%
                              addMarkers(lng = ~ Longitud, lat = ~ Latitud,
                                         clusterOptions = markerClusterOptions(),
                                         popup = namaTempat),
+                           mainPanel(
+                             h4("List of the location with their address and contact number")
+                           ),
+                           br(),
                            fluidRow(
                              column(12, dataTableOutput('table'))
-                           ))
+                           )),
+                  tabPanel("About us",
+                           h1("Group Members", align = "center"),
+                           HTML('<center><img src="2.png"></center>'),
+                           h3("Here is our group member for this project, all 4 of us are First Year students in University of Malaya, majoring in Data Science. Of course the names are just our aliases. Our true names are :",align = "center"),
+                           h3("- DJ Salik is IRFAN ABIDIN AS-SALIK", align = "center"),
+                           h3("- Roger Aiman is AIMAN WAFIQ", align = "center"),
+                           h3("- Andrew Nzr is MOHAMAD NIZAR MUSTAQEEM", align = "center"),
+                           h3("- Dayah the Explorer is SITI NORHIDAYAH", align = "center")
+                           )
                   
                   
                 ) # navbarPage
