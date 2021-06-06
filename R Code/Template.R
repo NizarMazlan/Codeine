@@ -95,9 +95,8 @@ ui <- fluidPage(shinythemes::themeSelector(),
                            )
                            
                   ),
-                  tabPanel("Statistics", 
-                    h4("This panel shows the statistics of drug
-                           addicts by categories."),
+                  tabPanel("Statistics",
+                           h2("Statistics of Drug Addicts in Malaysia by Categories."),
                            sidebarPanel(
                              # choose the type of dataset
                              selectInput(inputId ="channel1", label = "Choose Dataset",
@@ -105,14 +104,24 @@ ui <- fluidPage(shinythemes::themeSelector(),
                                                      "Academic"="acd",
                                                      "Gender"="gen",
                                                      "Age"="age")),
-                             checkboxInput("chAverage", "Average", FALSE)
-                             
+                             h6(""),
+                             h6("Do you want to see the average for the dataset choosen?"),
+                             checkboxInput("chAverage", "Average", FALSE),
+                             radioButtons("sum", 
+                                          
+                                          "You can choose the type of summary for this graph:",
+                                          c("Simplified" = "norm",
+                                            "Description" = "uniq"))
                            ),
-                           
                            # main panel for displaying histogram
                            mainPanel(
-                             plotOutput("barPlot")
+                             tabsetPanel(
+                               tabPanel("Plot", plotOutput("barPlot")), 
+                               tabPanel("Summary", verbatimTextOutput("summary"))  
+                             )
+                             
                            )
+                           
                   ),
                   tabPanel("Locations of Rehab Centre",
                            h3("This panel shows the locations of Drug Rehabilitation Centre in Malaysia."),
@@ -277,7 +286,7 @@ server <- function(input, output) {
         
         # Plotting Multiple Bar Graph
         p <- ggplot(df_new, aes(Occupation, y = Count, 
-                                fill = Year)) +
+                           fill = Year)) +
           ggtitle("Drug Addicts in Malaysia Sorted by Occupation from Year 2017 until 2019") +
           xlab("Year") +
           ylab("Average Count from 2017-2019") +
@@ -289,21 +298,21 @@ server <- function(input, output) {
       
     }else if(input$channel1 == "acd"){
       if(input$chAverage == TRUE){
+        # Sort data
         bar <- academicData$Academic_Qualification
-        val <- mean(c(academicData$x2017,academicData$x2018,academicData$x2019))
-        
+        val <- academicData$Mean
+
         df <- data.frame(bar,val)
-        
-        # Multiple Bar Chart
+      
+        # Bar chart
         ggplot(data = df, aes(x = reorder(bar, val), y = val)) +
           geom_bar(stat='identity',aes(fill = val) )+ 
           coord_flip() +
-          ggtitle("Average of Drug Addicts in Malaysia Sorted by 
-                  Academic Qualification From Year 2017 until 2019") +
+          ggtitle("Average Drug Addicts in Malaysia Sorted by Academic Qualification from Y2017-Y2018") +
           xlab("Academic Qualification") +
           ylab("Average Count from 2017-2019") +
           scale_fill_gradient("Average", low="darkolivegreen1",high="deepskyblue3") +
-          theme_bw(base_size = 15)
+          theme_bw(base_size = 10)
         
       }else{
         # Sort data
@@ -332,7 +341,7 @@ server <- function(input, output) {
     }else if(input$channel1 == "age"){
       if(input$chAverage == TRUE){
         bar <- ageData$Age
-        val <- mean(c(ageData$x2017,ageData$x2018,ageData$x2019))
+        val <- ageData$Average
         
         df <- data.frame(bar,val)
         
@@ -391,9 +400,63 @@ server <- function(input, output) {
         
         p + coord_flip()
       }else{
+        # Sort data
+        df <- data.frame(
+          Y2017 = genderData$X2017,
+          Y2018 = genderData$X2018,
+          Y2019 = genderData$X2019,
+          Range = as.factor(genderData$gender)
+        )
+        
+        # Gather and Update data frame
+        df_new <- df %>%
+          gather("Year", "Count", -Range)
+        
+        # Plotting Multiple Bar Graph
+        ggplot(df_new, aes(Range, y = Count, 
+                           fill = Year)) +
+          ggtitle("Drug Addicts in Malaysia Sorted by Age from Year 2017 until 2019") +
+          xlab("Age Range") +
+          ylab("Count from 2017-2019") +
+          geom_col(position = "dodge", stat='identity') + 
+          geom_text(aes(label=Count), vjust=-0.25, color="black",
+                    position = position_dodge(0.9))
+      }
+      
+    }
+    
+  })
+    
+  
+  # output for summary under statistics tab
+  output$summary <- renderPrint({
+    if(input$channel1 == "occ"){
+      if(input$sum == "norm"){
+        summary(occupationData)
+      }else{
+        
+      }
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "norm"){
+        summary(academicData)
+      }else{
+        
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "norm"){
+        summary(ageData)
+      }else{
+        
+      }
+    }else{
+      if(input$sum == "norm"){
+        summary(genderData)
+      }else{
         
       }
     }
+    
+    
   })
   
   
