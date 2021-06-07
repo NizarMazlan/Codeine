@@ -2,6 +2,7 @@
 library(png)
 library(shiny)
 library(shinythemes)
+library(shinydashboardPlus)
 library(ggplot2)
 library(plyr)
 library(tidyr)
@@ -33,18 +34,19 @@ total2018 = sum(negeriData$X2018)
 total2019 = sum(negeriData$X2019)
 
 # Define UI
-ui <- fluidPage(shinythemes::themeSelector(),
+ui <- fluidPage(theme = shinytheme("cerulean"),
+                shinythemes::themeSelector(),
                 navbarPage(
                   theme = "superhero",  
                   "Codeine",
-                  # Embed R Markdown under this tab
+                  # Home panel
                   tabPanel("Home",
                            sidebarPanel(
                              h2("Codeine"),
                              p("Our Group name is Codeine, we chose this name because it is a type of weak drug that is used as a pain reliever and cough supressent"),
                              br(),
                              br(),
-                             HTML('<center><img src="logoCodeine.png", height = 200, width = 200></center>')
+                             HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/logoCodeine.png", height = 200, width = 200></center>')
                            ),
                            mainPanel(
                              h1("Hello fellow Malaysian"),
@@ -55,8 +57,11 @@ ui <- fluidPage(shinythemes::themeSelector(),
                              strong(h4("Problem statement")),
                              p("The use, misuse, and abuse of substances and drugs among adolescents and youngsters has been found to be on the rise. Because there hasn't been much research done in Malaysia to analyze this issue."),
                              br(),
+                             strong(h4("Question")),
+                             p("So after a thorough discussion with the whole team, we came up with a question. How can we have a clear view of this drug addiction issue in Malaysia ?"),
+                             br(),
                              strong(h4("Solution")),
-                             p("Drug abuse is a complex issue and has been a serious public health problem in Malaysia. As a result, we created this project to spread awareness among Malaysians."),
+                             p("Drug abuse is a complex issue and has been a serious public health problem in Malaysia. As a result, we created this project that has informations on statistic of drug addiction ,places you can get help if you face drug abuse problem and we did it to spread awareness among Malaysians."),
                              br(),
                              br(),
                              strong(h3("Objective")),
@@ -66,6 +71,9 @@ ui <- fluidPage(shinythemes::themeSelector(),
                              p("- To monitor graphical presentation of drug addicts by gender"),
                              p("- To display drug addicts based on academic qualifications"),
                              p("- To display the places where drug addicts can get professional help"),
+                             br(),
+                             strong(h3("Datasets Used")),
+                             p("We use datasets from the official website of National Anti-Drugs Agency and from the website of Department of Statistics Malaysia"),
                              verbatimTextOutput("txtout"),
                              
                              
@@ -123,6 +131,7 @@ ui <- fluidPage(shinythemes::themeSelector(),
                            )
                            
                   ),
+                  #Locations tab
                   tabPanel("Locations of Rehab Centre",
                            h3("This panel shows the locations of Drug Rehabilitation Centre in Malaysia."),
                            
@@ -132,21 +141,26 @@ ui <- fluidPage(shinythemes::themeSelector(),
                                         clusterOptions = markerClusterOptions(),
                                         popup = namaTempat),
                            mainPanel(
-                             h4("List of the location with their address and contact number")
+                             h4("List of the location with their address and contact number", align = "center")
                            ),
                            br(),
                            fluidRow(
-                             column(12, dataTableOutput('table'))
+                             column(12, dataTableOutput('table'), align = "center")
                            )),
                   tabPanel("About us",
                            h1("Group Members", align = "center"),
-                           HTML('<center><img src="2.png"></center>'),
+                           HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/2.png"></center>'),
                            h3("Here is our group member for this project, all 4 of us are First Year students in University of Malaya, majoring in Data Science. Of course the names are just our aliases. Our true names are :",align = "center"),
                            h3("- DJ Salik is IRFAN ABIDIN AS-SALIK", align = "center"),
                            h3("- Roger Aiman is AIMAN WAFIQ", align = "center"),
                            h3("- Andrew Nzr is MOHAMAD NIZAR MUSTAQEEM", align = "center"),
                            h3("- Dayah the Explorer is SITI NORHIDAYAH", align = "center")
-                           )
+                  ),
+                  #footer
+                  footer = dashboardFooter(
+                    left = "By Codeine.R",
+                    right = "Malaysia, 2021"
+                  )
                   
                   
                 ) # navbarPage
@@ -157,9 +171,9 @@ ui <- fluidPage(shinythemes::themeSelector(),
 server <- function(input, output) {
   
   
-  #output table 
+  #output table of address and contact number
   output$table <- renderDataTable(listppd)
-  
+
   output$txtout <- renderText({
     paste( input$txt1, input$txt2, sep = " " )
   })
@@ -213,6 +227,7 @@ server <- function(input, output) {
     )
   })
   
+
   # The bubble drug plot
   output$bubbleDrug <- renderBubbles({
     if (nrow(negeriData) == 0)
@@ -286,7 +301,7 @@ server <- function(input, output) {
         
         # Plotting Multiple Bar Graph
         p <- ggplot(df_new, aes(Occupation, y = Count, 
-                           fill = Year)) +
+                                fill = Year)) +
           ggtitle("Drug Addicts in Malaysia Sorted by Occupation from Year 2017 until 2019") +
           xlab("Year") +
           ylab("Average Count from 2017-2019") +
@@ -301,9 +316,9 @@ server <- function(input, output) {
         # Sort data
         bar <- academicData$Academic_Qualification
         val <- academicData$Mean
-
+        
         df <- data.frame(bar,val)
-      
+        
         # Bar chart
         ggplot(data = df, aes(x = reorder(bar, val), y = val)) +
           geom_bar(stat='identity',aes(fill = val) )+ 
@@ -426,7 +441,7 @@ server <- function(input, output) {
     }
     
   })
-    
+  
   
   # output for summary under statistics tab
   output$summary <- renderPrint({
