@@ -1,9 +1,9 @@
-Academic_Qualification,2017,2018,2019
-No Schooling,3751,4044,3545
-Primary School,2370,2118,2301
-PMR or equivalent,9082,8451,8843
-SPM/SPMV or equiv,9311,9114,9678
-STPM or equiv,166,166,154
-Diploma,473,540,620
-BC/Masters/PhD,113,114,129
-Others,656,720,810
+Academic_Qualification,2017,2018,2019,Average
+No Schooling,3751,4044,3545,3780.00
+Primary School,2370,2118,2301,2263.00
+PMR or equivalent,9082,8451,8843,8792.00
+SPM/SPMV or equiv,9311,9114,9678,9368.00
+STPM or equiv,166,166,154,162.00
+Diploma,473,540,620,554.00
+BC/Masters/PhD,113,114,129,119.00
+Others,656,720,810,729.00
