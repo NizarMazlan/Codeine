@@ -15,15 +15,14 @@ library(bubbles) #for bubble graph
 
 
 # Data preparation
-setwd("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest")
-occupationData <- read.csv("01-Occupation.csv")
-genderData <- read.csv("02-Gender.csv")
-ageData <- read.csv("03-Age.csv")
-academicData <- read.csv("04-Academic.csv")
-negeriData <- read.csv("negeriData.csv")
-ppd <- read_excel("Lokasi-Pusat-Pemulihan-Dadah.xlsx")
+occupationData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/01-Occupation.csv")
+genderData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/02-Gender.csv")
+ageData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/03-Age.csv")
+academicData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/04-Academic.csv")
+negeriData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/negeriData.csv")
+ppd <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Lokasi-Pusat-Pemulihan-Dadah.xlsx")
 namaTempat <- ppd$Institution
-listppd <- read_excel("Alamat-Pusat-Pemulihan.xlsx")
+listppd <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Alamat-Pusat-Pemulihan.xlsx")
 
 #total for total cases
 total2014 = sum(negeriData$X2014)
@@ -318,7 +317,7 @@ server <- function(input, output) {
       if(input$chAverage == TRUE){
         # Sort data
         bar <- academicData$Academic_Qualification
-        val <- academicData$Mean
+        val <- academicData$Average
         
         df <- data.frame(bar,val)
         
