@@ -474,27 +474,30 @@ server <- function(input, output) {
         
         p + coord_flip()
       }else{
-        # Sort data
-        df <- data.frame(
-          Y2017 = genderData$X2017,
-          Y2018 = genderData$X2018,
-          Y2019 = genderData$X2019,
-          Range = as.factor(genderData$gender)
-        )
+                
+        # prepare data
         
-        # Gather and Update data frame
-        df_new <- df %>%
-          gather("Year", "Count", -Range)
+        m17 <- round(sum(genderData[,"M.17"])/sum(genderData[,"Total.17"])*100,2)
+        f17 <- round(sum(genderData[,"F.17"])/sum(genderData[,"Total.17"])*100,2)
+        m18 <- round(sum(genderData[,"M18"])/sum(genderData[,"Total.18"])*100,2)
+        f18 <- round(sum(genderData[,"F.18"])/sum(genderData[,"Total.18"])*100,2)
+        m19 <- round(sum(genderData[,"M19"])/sum(genderData[,"Total.19"])*100,2)
+        f19 <- round(sum(genderData[,"F.19"])/sum(genderData[,"Total.19"])*100,2)
         
-        # Plotting Multiple Bar Graph
-        ggplot(df_new, aes(Range, y = Count, 
-                           fill = Year)) +
-          ggtitle("Drug Addicts in Malaysia Sorted by Age from Year 2017 until 2019") +
-          xlab("Age Range") +
-          ylab("Count from 2017-2019") +
-          geom_col(position = "dodge", stat='identity') + 
-          geom_text(aes(label=Count), vjust=-0.25, color="black",
-                    position = position_dodge(0.9))
+        df <- data.frame(m17,f17,m18,f18,m19,f19)
+        percentage <- c(df[,"m17"], df[,"f17"], df[,"m18"], df[,"f18"],
+                        df[,"m19"], df[,"f19"])
+        gender <- rep(c("Male","Female"), times = 3)
+        year <- rep(c("2017","2018","2019"),each = 2)
+        
+        df2 <- data.frame(gender, year,percentage)
+        
+        ggplot(df2, aes(x = year, y = percentage, fill = gender, color = year)) +
+          ggtitle("Drug Addicts in Malaysia Sorted by Gender from Year 2017 until 2019")+
+          geom_col(size=.8) +
+          scale_color_manual(values=c("red", "blue", "purple")) +
+          scale_fill_viridis_d() +
+          coord_polar("y")
       }
       
     }
