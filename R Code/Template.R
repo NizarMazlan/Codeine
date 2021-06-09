@@ -149,7 +149,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            fluidRow(
                              column(12, dataTableOutput('table'), align = "center")
                            )),
-                  tabPanel("About us",
+                  tabPanel("About Us",
                            h1("Group Members", align = "center"),
                            HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/2.png"></center>'),
                            h3("Here is our group member for this project, all 4 of us are First Year students in University of Malaya, majoring in Data Science. Of course the names are just our aliases. Our true names are :",align = "center"),
