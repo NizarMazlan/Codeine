@@ -184,9 +184,29 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                              tags$li(" Others")
                            ),
                            br(),
+                           br(),
                            p("As you all can see, Peer Influence is the most common reason for people to get into drugs. Biggest part of this might be because they want to fit in amongst their peers. They might think it is not a big deal since their peers do drugs so easily without thinking the consequences of being addicted to drugs.
-                              Well human beings are social creatures, it is important for humans to feel normal and like we belong or fit in. This can contribute them to try and influenced to take drugs."),
-                           
+                              Well human beings are social creatures, it is important for humans to feel normal and like we belong or fit in. This can contribute them to try and influenced to take drugs. At first, they may think they can control how much and how often to use it. But over time, drugs change how your brain works.
+                             These physical changed can last a long time. They make you lose control and can lead to damaging behaviors. Drug addiction can also cause other disease such as Cardiovascular disease, stimulants such as cocaine methamphetamines, can damage the heart and blood vessels.
+                             The long term use of these drugs can lead to coronary artery disease, arrhythmia, and heart attack. Other diseases like respiratory problems, kidney damage, liver disease and of course ovedose can be caused by drug addiction"),
+                           br(),
+                           br(),
+                           p("But if you ever in the situation in drug addiction there are things that you can do. It is never too late to quit using drugs. Reducing and quitting drugs can improve your life significantly. It can improve your physical and mentall wellbeing.
+                             Other than that, it can reduce your risk of permanent damage to your vital organs. By having good emotional wellbeing you will definitely improve your relationship with friends and family and be connected to your emotions.
+                             Quitting drugs is not easy, it may vary between people, drugs and rang from mild to serious. They can last from few das to a few weeks. Craving for it will sometimes be week and at other times very strong. Learning how to control and manage them is important to stay drug-free.
+                             There are a few ways to quit drugs. Firstly, you have to admit you have a problem. If you realized that you are having drug addiction problem, you then must take action to either see a specialist. It is very important to do so as they can help you get appropriate help and support.
+                             Reach out and get help, there is a lot of NGOs, Government, and private sectors provide services to cope with drug addiction."),
+                           br(),
+                           br(),
+                           p("It is also important for you to learn how to help others, for example your friends and family. Firstly you must be mindful and alert to some possible indications.
+                             For instance, problems at school or work, frequently missing shcool or work, a sudden disinterest in school event, activities, or work, or drop in grades or work performances. Next would be their physical health, lack of energy or motivation to take care of their wellbeing.
+                             Neglected their appearance such as lack of interest in clothing or grooming might also be a possible indication. But most importantly, look for a change in behavior. They might have exaggerated efforts to bar family members from entering his or her room or being secretive aobut where he or she is going or going with"),
+                           br(),
+                           br(),
+                           p("As a Malaysian, I think we also play a big role in fighting drug addiction and drug abuse problem in Malaysia. Even though maybe some of you might not have any experience meeting a drug addicts or even be a drug addict, you should still learn what it is about. Drug addiction can really destroy lives.
+                             The least you can do is to learn about the effects of drugs that can help you understand why there are some people are drug addicts and why is it hard to quit. Secondly, show that you care without judging. Being calm and respectful may encourage them to open up and honest with you, they might even try harder to quit from being a drug addict.
+                             In addition, always be positive and encouraging rather than negative and nagging other people that have drug addiction problems. Relapse may happen to them and sometimes it is inevatible, but that does not mean that the person can't try again to quit. Lastly, if you encounter a drug addict that you know, offer them practical support.
+                             Sometimes just being there is enough, but you can offer to got with them to parties or join them for a walk, run or go to a rehabilitation centre. One small kindness can really change peoples lives.")
                            
                   ),
                   #Locations tab
@@ -477,12 +497,12 @@ server <- function(input, output) {
                 
         # prepare data
         
-        m17 <- round(sum(genderData[,"M.17"])/sum(genderData[,"Total.17"])*100,2)
-        f17 <- round(sum(genderData[,"F.17"])/sum(genderData[,"Total.17"])*100,2)
-        m18 <- round(sum(genderData[,"M18"])/sum(genderData[,"Total.18"])*100,2)
-        f18 <- round(sum(genderData[,"F.18"])/sum(genderData[,"Total.18"])*100,2)
-        m19 <- round(sum(genderData[,"M19"])/sum(genderData[,"Total.19"])*100,2)
-        f19 <- round(sum(genderData[,"F.19"])/sum(genderData[,"Total.19"])*100,2)
+        m17 <- round(sum(genderData$M17)/sum(genderData$Total17)*100,2)
+        f17 <- round(sum(genderData$F17)/sum(genderData$Total17)*100,2)
+        m18 <- round(sum(genderData$M18)/sum(genderData$Total18)*100,2)
+        f18 <- round(sum(genderData$F18)/sum(genderData$Total18)*100,2)
+        m19 <- round(sum(genderData$M19)/sum(genderData$Total19)*100,2)
+        f19 <- round(sum(genderData$F19)/sum(genderData$Total-19)*100,2)
         
         df <- data.frame(m17,f17,m18,f18,m19,f19)
         percentage <- c(df[,"m17"], df[,"f17"], df[,"m18"], df[,"f18"],
