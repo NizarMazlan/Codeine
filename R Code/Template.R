@@ -154,7 +154,14 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            mainPanel(
                              tabsetPanel(
                                tabPanel("Plot", plotOutput("barPlot")), 
-                               tabPanel("Summary", verbatimTextOutput("summary"))  
+                               tabPanel("Summary",
+                                        
+                                        verbatimTextOutput("summary"),
+                                        verbatimTextOutput("class"),
+                                        verbatimTextOutput("features"),
+                                        verbatimTextOutput("str"),
+                                        verbatimTextOutput("min"),
+                                        verbatimTextOutput("max"))  
                              )
                              
                            )
@@ -522,8 +529,135 @@ server <- function(input, output) {
         
       }
     }
+ 
+  })
     
+   # output for description: class
+  output$class <- renderPrint({
+    str <- "Type of class: "
+    if(input$channel1 == "occ"){
+      if(input$sum == "uniq"){
+        paste(str,class(occupationData))
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "uniq"){
+        paste(str,class(academicData))
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "uniq"){
+        paste(str,class(ageData))
+      }
+    }else{
+      if(input$sum == "uniq"){
+        paste(str,class(genderData))
+      }
+    }
     
+  })
+  
+  # output for description: names of features
+  output$features <- renderPrint({
+    
+    if(input$channel1 == "occ"){
+      if(input$sum == "uniq"){
+        names(occupationData)
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "uniq"){
+        names(academicData)
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "uniq"){
+        names(ageData)
+      }
+    }else{
+      if(input$sum == "uniq"){
+        names(genderData)
+      }
+    }
+    
+  })
+
+  # output for description: Format
+  output$str <- renderPrint({
+    
+    if(input$channel1 == "occ"){
+      if(input$sum == "uniq"){
+        str(occupationData)
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "uniq"){
+        str(academicData)
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "uniq"){
+        str(ageData)
+      }
+    }else{
+      if(input$sum == "uniq"){
+        str(genderData)
+      }
+    }
+    
+  })
+  
+  # output for description: minimum value
+  output$min <- renderPrint({
+    str <- "Minimum total of drug addicts reached in 2019: "
+    if(input$channel1 == "occ"){
+      if(input$sum == "uniq"){
+        min <- min(occupationData$X2019)
+        paste(str,min)
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "uniq"){
+        min <- min(academicData$X2019)
+        paste(str,min)
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "uniq"){
+        min <- min(ageData$X2019)
+        paste(str,min)
+        
+      }
+    }else{
+      if(input$sum == "uniq"){
+        min <- min(genderData$Total.19)
+        paste(str,min)
+      }
+    }
+  })
+  
+  # output for description: maximum value
+  output$max <- renderPrint({
+    str <- "Minimum total of drug addicts reached in 2019: "
+    if(input$channel1 == "occ"){
+      if(input$sum == "uniq"){
+        max <- max(occupationData$X2019)
+        paste(str,max)
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "uniq"){
+        max <- max(academicData$X2019)
+        paste(str,max)
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "uniq"){
+        max <- max(ageData$X2019)
+        paste(str,max)
+        
+      }
+    }else{
+      if(input$sum == "uniq"){
+        max <- max(genderData$Total.19)
+        paste(str,max)
+      }
+    }
   })
   
   
