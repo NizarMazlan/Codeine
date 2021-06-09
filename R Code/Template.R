@@ -23,6 +23,7 @@ negeriData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_L
 ppd <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Lokasi-Pusat-Pemulihan-Dadah.xlsx")
 namaTempat <- ppd$Institution
 listppd <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Alamat-Pusat-Pemulihan.xlsx")
+reasons <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Sebab-Sebab.xlsx")
 
 #total for total cases
 total2014 = sum(negeriData$X2014)
@@ -35,6 +36,29 @@ total2019 = sum(negeriData$X2019)
 # Define UI
 ui <- fluidPage(theme = shinytheme("cerulean"),
                 shinythemes::themeSelector(),
+                #setting for all html tags
+                #change fonts and what not
+                tags$head(
+                  tags$style(HTML("
+                      @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+                      /* Change font of header text */
+                      p {
+                          color: black;
+                          font-family: sans-serif;
+                          font-size: 130%;
+                        }
+                      ul {
+                          color: black;
+                          font-family: sans-serif;
+                          font-size: 130%;
+                        }
+                      /* Make text visible on inputs */
+                      .shiny-input-container {
+                        color: #474747;
+                      }"))
+                ),
+                
+                #starting of navbar
                 navbarPage(
                   theme = "superhero",  
                   "Codeine",
@@ -49,7 +73,10 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            ),
                            mainPanel(
                              h1("Hello fellow Malaysian"),
-                             p("This website is created by us to help Malaysians understand fully situation of drug addiction in Malaysia. We hope that everyone have awareness on this issue and take action that drug addiction is avoidable. "),
+                             p("This website is created by us to help Malaysians understand fully situation of drug addiction in Malaysia. We hope that everyone have awareness on this issue and take action that drug addiction is avoidable.
+                               For those of you who do not know what drug addiction is, drug addiction is a disease that affects a person's brain and behavior that lead to inability to control the use of a legal or illegal drug or medication.
+                               Substance such as alcohol, marijuana and nicorine also are considered as drug. When you are addicted, you may continue using the drug despite the harm it causes.
+                               Although the risk of addiciton and how fast you become addicted varies by drug. Some drugs, such as opioid painkillers, have a higher risk and cuase addiction more quickly than others"),
                              br(),
                              br(),
                              strong(h3("How do we come to Drug Addiction Project?")),
@@ -77,11 +104,10 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                              strong(h3("Datasets Used")),
                              p("We use datasets from the official website of National Anti-Drugs Agency and from the website of Department of Statistics Malaysia"),
                              verbatimTextOutput("txtout"),
-                             
-                             
                            ) # mainPanel
                            
-                  ), # Navbar 1, tabPanel
+                  ),
+                  #Bubble chart tab
                   tabPanel("By State", 
                            h3("This panel shows the bubble graph for states"),
                            fluidRow(
@@ -105,6 +131,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            )
                            
                   ),
+                  #Stats Tab
                   tabPanel("Statistics",
                            h2("Statistics of Drug Addicts in Malaysia by Categories."),
                            sidebarPanel(
@@ -133,6 +160,28 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            )
                            
                   ),
+                  tabPanel("Reasons",
+                           h2("Reasons of People in Malaysia for Using Drugs."),
+                           HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/radialplot.png", width = 40%></center>'),
+                           br(),
+                           br(),
+                           h3("The chart above explains the initial reasons for people to start being addicted into drugs. The reasons are :"),
+                           tags$ul(
+                             tags$li(" Peer influence"),
+                             tags$li(" Curiosity"),
+                             tags$li(" For Fun"),
+                             tags$li(" Stress"),
+                             tags$li(" Relief Pain"),
+                             tags$li(" Stimulant"),
+                             tags$li(" Ignorance / Unaware"),
+                             tags$li(" Others")
+                           ),
+                           br(),
+                           p("As you all can see, Peer Influence is the most common reason for people to get into drugs. Biggest part of this might be because they want to fit in amongst their peers. They might think it is not a big deal since their peers do drugs so easily without thinking the consequences of being addicted to drugs.
+                              Well human beings are social creatures, it is important for humans to feel normal and like we belong or fit in. This can contribute them to try and influenced to take drugs."),
+                           
+                           
+                  ),
                   #Locations tab
                   tabPanel("Locations of Rehab Centre",
                            h3("This panel shows the locations of Drug Rehabilitation Centre in Malaysia."),
@@ -149,9 +198,10 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            fluidRow(
                              column(12, dataTableOutput('table'), align = "center")
                            )),
+                  #About us Panel
                   tabPanel("About Us",
                            h1("Group Members", align = "center"),
-                           HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/2.png"></center>'),
+                           HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/3.png", width = 75%></center>'),
                            h3("Here is our group member for this project, all 4 of us are First Year students in University of Malaya, majoring in Data Science. Of course the names are just our aliases. Our true names are :",align = "center"),
                            h3("- DJ Salik is IRFAN ABIDIN AS-SALIK", align = "center"),
                            h3("- Roger Aiman is AIMAN WAFIQ", align = "center"),
@@ -175,7 +225,7 @@ server <- function(input, output) {
   
   #output table of address and contact number
   output$table <- renderDataTable(listppd)
-
+  
   output$txtout <- renderText({
     paste( input$txt1, input$txt2, sep = " " )
   })
@@ -229,7 +279,7 @@ server <- function(input, output) {
     )
   })
   
-
+  
   # The bubble drug plot
   output$bubbleDrug <- renderBubbles({
     if (nrow(negeriData) == 0)
@@ -475,8 +525,6 @@ server <- function(input, output) {
     
     
   })
-  
-  
   
   
 } # server
