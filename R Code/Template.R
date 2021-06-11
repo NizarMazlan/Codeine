@@ -225,6 +225,20 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            fluidRow(
                              column(12, dataTableOutput('table'), align = "center")
                            )),
+                  #Documentation tab
+                  tabPanel("Documentation",
+                           h1("The panel"),
+                           h2("Home"),
+                           p("The home panel lists all of the major issues encountered as well as the applications' goals for resolving them."),
+                           h2("By State"),
+                           p("The By State panel shows the bubble graph for all the states in Malaysia from 2014 till 2019. Users can select the year they desire interactively by moving the slider to the corresponding year. The modifications will shortly be updated on the bubble graph."),
+                           h2("Statistics"),
+                           p("The Statistics panel displays drug addict statistics in Malaysia. The user may select from a variety of datasets, including (Occupation, Academic, Gender, and Age) and the graph for that dataset will be displayed. This panel also shows the graph's simplified/description summary."),
+                           h2("Reasons"),
+                           p("The Reasons panel explains the initial reasons for people to start being addicted into drugs by aspects such as peer influence, curiosity, for pleasure, stress, pain relief, stimulant, ignorance/unawareness, and others."),
+                           h2("Location of Rehab Center"),
+                           p("The Locations of Rehab Centre shows the locations of Drug Rehabilitation Centre in Malaysia . This application can display the precise position of the Rehab Centre in the map by utilizing the leaflet package. This panel also includes a list of institutions, along with their addresses and phone numbers.")
+                  ),
                   #About us Panel
                   tabPanel("About Us",
                            h1("Group Members", align = "center"),
