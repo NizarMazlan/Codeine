@@ -230,7 +230,7 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            h1("Group Members", align = "center"),
                            HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/3.png", width = 75%></center>'),
                            h3("Here is our group member for this project, all 4 of us are First Year students in University of Malaya, majoring in Data Science. Of course the names are just our aliases. Our true names are :",align = "center"),
-                           h3("- DJ Salik is IRFAN ABIDIN AS-SALIK", align = "center"),
+                           h3("- DJ Salik is IRFAN ABIDIN AS SALIK", align = "center"),
                            h3("- Roger Aiman is AIMAN WAFIQ", align = "center"),
                            h3("- Andrew Nzr is MOHAMAD NIZAR MUSTAQEEM", align = "center"),
                            h3("- Dayah the Explorer is SITI NORHIDAYAH", align = "center")
