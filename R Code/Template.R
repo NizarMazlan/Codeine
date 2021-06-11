@@ -655,9 +655,37 @@ server <- function(input, output) {
     }
   })
   
+ # output for description: minimum value
+  output$min <- renderPrint({
+    str <- "Minimum total of drug addicts reached in 2019: "
+    if(input$channel1 == "occ"){
+      if(input$sum == "uniq"){
+        min <- min(occupationData$X2019)
+        paste(str,min)
+      }
+      
+    }else if(input$channel1 == "acd"){
+      if(input$sum == "uniq"){
+        min <- min(academicData$X2019)
+        paste(str,min)
+      }
+    }else if(input$channel1 == "age"){
+      if(input$sum == "uniq"){
+        min <- min(ageData$X2019)
+        paste(str,min)
+        
+      }
+    }else{
+      if(input$sum == "uniq"){
+        min <- min(genderData$Total19)
+        paste(str,min)
+      }
+    }
+  })
+  
   # output for description: maximum value
   output$max <- renderPrint({
-    str <- "Minimum total of drug addicts reached in 2019: "
+    str <- "Maximum total of drug addicts reached in 2019: "
     if(input$channel1 == "occ"){
       if(input$sum == "uniq"){
         max <- max(occupationData$X2019)
@@ -677,7 +705,7 @@ server <- function(input, output) {
       }
     }else{
       if(input$sum == "uniq"){
-        max <- max(genderData$Total.19)
+        max <- max(genderData$Total19)
         paste(str,max)
       }
     }
