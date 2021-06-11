@@ -649,7 +649,7 @@ server <- function(input, output) {
       }
     }else{
       if(input$sum == "uniq"){
-        min <- min(genderData$Total.19)
+        min <- min(genderData$Total19)
         paste(str,min)
       }
     }
