@@ -1,58 +1,70 @@
-Drug Addiction Hotspot
-========================================================
+Codeine
 
-<p>Group Member
-  <br/>
-  - Mohamad Nizar Mustaqeem Bin Mazlan (17206540)
-  <br/>
-  - Siti Norhidayah Binti Abdul Bari Arbee (17206657)
-  <br/>
-  - Aiman Wafiq Bin Appandi (17204090)
-  <br/>
-  - Irfan Abidin As Salik Bin Noor Riza Al Jeffery (17204593)
-  <br/>
+incremental: false
+
+<font color = "darkred"> </font>
+
+Group Member <br/> 1. Aiman Wafiq <br/> 2. Siti Norhidayah <br/> 3. Mohamad Nizar Mustaqeem <br/> 4. Irfan Abidin As Salik <br/>
+
 </p>
 
-  
 ========================================================
 
-## Objective
-+ To identify patterns of drug addicts' trends from 2017 to 2019 in Malaysia.
-+ To show the graph illustration of drug addicts by occupation.
-+ To display drug addicts according to their age.
-+ To monitor the graphical presentation of drug addicts by gender.
-+ To display drug addicts based on academic qualifications.
+How do we come to Drug Addiction Project
+
+Problem statement
+
+The use, misuse, and abuse of substances and drugs among adolescents and youngsters has been found to be on the rise. Because there hasn't been much research done in Malaysia to analyze this issue.
+
+The Questions?
+
+What is the range of age who take drugs?
+
+What is the trends of change of drugers through year 2014 - 2019 in Malaysia?
+
+How many drug addicts who have jobs and those who dont?
+
+Is drug addicts among teenagers is higher than adults?
 
 ========================================================
 
-## How do we come to Drug Addiction Project
-### Problem statement
-The use, misuse, and abuse of substances and drugs among adolescents and youngsters has been found to be on the rise. Because there hasn't been much research done in Malaysia to analyze this issue. 
+Solution
 
-### Solution
 Drug abuse is a complex issue and has been a serious public health problem in Malaysia. As a result, we created this project to spread awareness among Malaysians.
 
+Objective
+
+To identify patterns of drug addicts' trends from 2017 to 2019 in Malaysia.
+
+To show the graph illustration of drug addicts by occupation.
+
+To display drug addicts according to their age.
+
+To monitor the graphical presentation of drug addicts by gender.
+
+To display drug addicts based on academic qualifications.
+
 ==========================================================
 
-## Features that we have acquired from the dataset
-- Drug addicts by type of occupation, Malaysia, 2017-2019.
-- Drug addicts by academic qualification, Malaysia, 2017-2019		
-- Drug addicts by age, Malaysia, 2017-2019		
-- Drug addicts by gender, Malaysia, 2017-2019		
+Features that we have acquired from the dataset
 
+Drug addicts by type of occupation, Malaysia, 2017-2019.
 
-The dataset we used in this project is available at:
+Drug addicts by academic qualification, Malaysia, 2017-2019
 
-[Click here to see the dataset](https://www.adk.gov.my/en/public/drugs-statistics/)
+Drug addicts by age, Malaysia, 2017-2019
 
-==========================================================
+Drug addicts by gender, Malaysia, 2017-2019
 
-## Resources
+Codeine Shiny Application is available here: https://assalik.shinyapps.io/Codeine/
 
-Mohamed, M., Marican, S., Elias, N., & Don, Y. (n.d.). PATTERN OF SUBSTANCE AND DRUG MISUSE AMONG YOUTH IN MALAYSIA. Retrieved from website: https://www.adk.gov.my/wp-content/uploads/1.pdf
+The dataset we used in this project is available at: https://www.adk.gov.my/en/public/drugs-statistics/
 
-Drugs Statistics – Laman Web Rasmi Agensi Anti Dadah Kebangsaan. (2020). Retrieved May 28, 2021, from Adk.gov.my website: https://www.adk.gov.my/en/public/drugs-statistics/
-
-Wan Sulaiman, W. M. S., Ismail, Z., Wan Sulaiman, W. S., & Muhamat@Kawangit, R. (2021). Self-Control as Predictor of Hope among Drug Addicts in Malaysian Rehabilitation Centers. International Journal of Academic Research in Business and Social Sciences, 11(3). https://doi.org/10.6007/ijarbss/v11-i3/8655
+Source code for this application is available on Github: https://github.com/NizarMazlan/Codeine
 
 ===========================================================
+
+Screenshot of RShiny Application
+
+plot of chunk unnamed-chunk-1
+
