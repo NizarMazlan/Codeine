@@ -1,10 +1,10 @@
 # Load R packages
-library(png)
+library(rsconnect)
 library(shiny)
 library(shinythemes)
-library(shinydashboardPlus)
 library(ggplot2)
 library(plyr)
+library(shinydashboardPlus)
 library(tidyr)
 library(dplyr)
 library(leaflet)
@@ -13,17 +13,18 @@ library(tidyverse) #for bubble graph
 library(shinydashboard) #for bubble graph
 library(bubbles) #for bubble graph
 
-
 # Data preparation
-occupationData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/01-Occupation.csv")
-genderData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/02-Gender.csv")
-ageData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/03-Age.csv")
-academicData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/04-Academic.csv")
-negeriData <- read.csv("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/negeriData.csv")
-ppd <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Lokasi-Pusat-Pemulihan-Dadah.xlsx")
-namaTempat <- ppd$Institution
-listppd <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Alamat-Pusat-Pemulihan.xlsx")
-reasons <- read_excel("C:/Users/User/Documents/GitHub/my-drug-hotspot/Dataset_Latest/Sebab-Sebab.xlsx")
+#setwd("C://Users//USER//OneDrive//Documents//R//MyDrug")
+occupationData <- read.csv("01-Occupation.csv")
+genderData <- read.csv("02-Gender.csv")
+ageData <- read.csv("03-Age.csv")
+academicData <- read.csv("04-Academic.csv")
+negeriData <- read.csv("negeriData.csv")
+ppd <- read_excel("Lokasi_Pusat_Pemulihan_Dadah.xlsx")
+namaTempat <- ppd$Institusi
+listppd <- read_excel("Alamat-Pusat-Pemulihan.xlsx")
+
+
 
 #total for total cases
 total2014 = sum(negeriData$X2014)
@@ -122,6 +123,11 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            fluidRow(
                              sidebarPanel(
                                sliderInput(inputId = "bubbleYear", label = "Choose Year", min = 2014, max = 2019, value = 2014),
+                               h6(""),
+                               h6("Above is a slider, to choose the year of Total Drug Addicts by States in the form of Bubble Graph"),
+                               fluidRow(
+                                 column(7, dataTableOutput('table2'), align = "center")
+                               )
                              ),
                              box(
                                width = 8, status = "info", solidHeader = TRUE,
@@ -237,17 +243,25 @@ ui <- fluidPage(theme = shinytheme("cerulean"),
                            h2("Reasons"),
                            p("The Reasons panel explains the initial reasons for people to start being addicted into drugs by aspects such as peer influence, curiosity, for pleasure, stress, pain relief, stimulant, ignorance/unawareness, and others."),
                            h2("Location of Rehab Center"),
-                           p("The Locations of Rehab Centre shows the locations of Drug Rehabilitation Centre in Malaysia . This application can display the precise position of the Rehab Centre in the map by utilizing the leaflet package. This panel also includes a list of institutions, along with their addresses and phone numbers.")
-                  ),
+                           p("The Locations of Rehab Centre shows the locations of Drug Rehabilitation Centre in Malaysia . This application can display the precise position of the Rehab Centre in the map by utilizing the leaflet package. This panel also includes a list of institutions, along with their addresses and phone numbers."),
+                  
+                           h1("Resources"),
+                           p("Mohamed, M., Marican, S., Elias, N., & Don, Y. (n.d.). PATTERN OF SUBSTANCE AND DRUG MISUSE AMONG YOUTH IN MALAYSIA. Retrieved from website: https://www.adk.gov.my/wp-content/uploads/1.pdf"),
+                           p("Drugs Statistics Laman Web Rasmi Agensi Anti Dadah Kebangsaan. (2020). Retrieved May 28, 2021, from Adk.gov.my website: https://www.adk.gov.my/en/public/drugs-statistics/"),
+                           p("Wan Sulaiman, W. M. S., Ismail, Z., Wan Sulaiman, W. S., & Muhamat@Kawangit, R. (2021). Self-Control as Predictor of Hope among Drug Addicts in Malaysian Rehabilitation Centers. International Journal of Academic Research in Business and Social Sciences, 11(3). https://doi.org/10.6007/ijarbss/v11-i3/8655")
+                           ),
+                  
+                  
                   #About us Panel
                   tabPanel("About Us",
                            h1("Group Members", align = "center"),
                            HTML('<center><img src="https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/3.png", width = 75%></center>'),
                            h3("Here is our group member for this project, all 4 of us are First Year students in University of Malaya, majoring in Data Science. Of course the names are just our aliases. Our true names are :",align = "center"),
+                           h3("- Dayah the Explorer is SITI NORHIDAYAH", align = "center"),
                            h3("- DJ Salik is IRFAN ABIDIN AS SALIK", align = "center"),
                            h3("- Roger Aiman is AIMAN WAFIQ", align = "center"),
-                           h3("- Andrew Nzr is MOHAMAD NIZAR MUSTAQEEM", align = "center"),
-                           h3("- Dayah the Explorer is SITI NORHIDAYAH", align = "center")
+                           h3("- Andrew Nzr is MOHAMAD NIZAR MUSTAQEEM", align = "center")
+                           
                   ),
                   #footer
                   footer = dashboardFooter(
@@ -267,6 +281,9 @@ server <- function(input, output) {
   #output table of address and contact number
   output$table <- renderDataTable(listppd)
   
+  #output table of Total Drug Addicts by States and Year
+  output$table2 <- renderDataTable(negeriData)
+  
   output$txtout <- renderText({
     paste( input$txt1, input$txt2, sep = " " )
   })
@@ -275,7 +292,7 @@ server <- function(input, output) {
   output$T2014 <- renderValueBox({
     valueBox(
       value = format(total2014, big.mark=","),
-      subtitle = "Total # of 2014",
+      subtitle = "Total drug addicts in 2014",
       color = "aqua" 
     )
   })
@@ -284,7 +301,7 @@ server <- function(input, output) {
   output$T2015 <- renderValueBox({
     valueBox(
       value = format(total2015, big.mark=","),
-      subtitle = "Total # of 2015"
+      subtitle = "Total drug addicts in 2015"
     )
   })
   
@@ -292,7 +309,7 @@ server <- function(input, output) {
   output$T2016 <- renderValueBox({
     valueBox(
       value = format(total2016, big.mark=","),
-      subtitle = "Total # of 2016"
+      subtitle = "Total drug addicts in 2016"
     )
   }) 
   
@@ -300,7 +317,7 @@ server <- function(input, output) {
   output$T2017 <- renderValueBox({
     valueBox(
       value = format(total2017, big.mark=","),
-      subtitle = "Total # of 2017"
+      subtitle = "Total drug addicts in 2017"
     )
   })
   
@@ -308,7 +325,7 @@ server <- function(input, output) {
   output$T2018 <- renderValueBox({
     valueBox(
       value = format(total2018, big.mark=","),
-      subtitle = "Total # of 2018"
+      subtitle = "Total drug addicts in 2018"
     )
   })
   
@@ -316,7 +333,7 @@ server <- function(input, output) {
   output$T2019 <- renderValueBox({
     valueBox(
       value = format(total2019, big.mark=","),
-      subtitle = "Total # of 2019"
+      subtitle = "Total drug addicts in 2019"
     )
   })
   
@@ -508,7 +525,7 @@ server <- function(input, output) {
         
         p + coord_flip()
       }else{
-                
+        
         # prepare data
         
         m17 <- round(sum(genderData$M17)/sum(genderData$Total17)*100,2)
@@ -566,10 +583,10 @@ server <- function(input, output) {
         
       }
     }
- 
-  })
     
-   # output for description: class
+  })
+  
+  # output for description: class
   output$class <- renderPrint({
     str <- "Type of class: "
     if(input$channel1 == "occ"){
@@ -616,7 +633,7 @@ server <- function(input, output) {
     }
     
   })
-
+  
   # output for description: Format
   output$str <- renderPrint({
     
@@ -642,34 +659,6 @@ server <- function(input, output) {
   })
   
   # output for description: minimum value
-  output$min <- renderPrint({
-    str <- "Minimum total of drug addicts reached in 2019: "
-    if(input$channel1 == "occ"){
-      if(input$sum == "uniq"){
-        min <- min(occupationData$X2019)
-        paste(str,min)
-      }
-      
-    }else if(input$channel1 == "acd"){
-      if(input$sum == "uniq"){
-        min <- min(academicData$X2019)
-        paste(str,min)
-      }
-    }else if(input$channel1 == "age"){
-      if(input$sum == "uniq"){
-        min <- min(ageData$X2019)
-        paste(str,min)
-        
-      }
-    }else{
-      if(input$sum == "uniq"){
-        min <- min(genderData$Total19)
-        paste(str,min)
-      }
-    }
-  })
-  
- # output for description: minimum value
   output$min <- renderPrint({
     str <- "Minimum total of drug addicts reached in 2019: "
     if(input$channel1 == "occ"){
