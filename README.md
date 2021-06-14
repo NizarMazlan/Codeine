@@ -42,7 +42,7 @@ command to run if program contains helper info
 Contributors names and contact info
 
 - Aiman Wafiq
-- 
+- As Salik
 ex. [@DomPizzie](https://twitter.com/dompizzie)
 
 ## Version History
