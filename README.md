@@ -8,7 +8,7 @@ Ciao #salamGiGit
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+This website is created by us to help Malaysians understand fully situation of drug addiction in Malaysia. We hope that everyone have awareness on this issue and take action that drug addiction is avoidable. For those of you who do not know what drug addiction is, drug addiction is a disease that affects a person's brain and behavior that lead to inability to control the use of a legal or illegal drug or medication. Substance such as alcohol, marijuana and nicorine also are considered as drug. When you are addicted, you may continue using the drug despite the harm it causes. Although the risk of addiciton and how fast you become addicted varies by drug. Some drugs, such as opioid painkillers, have a higher risk and cuase addiction more quickly than others
 
 ## Getting Started
 
@@ -41,7 +41,7 @@ command to run if program contains helper info
 
 Contributors names and contact info
 
-- Aiman Wafiq
+- Aiman Wafiq 
 - As Salik
 ex. [@DomPizzie](https://twitter.com/dompizzie)
 
