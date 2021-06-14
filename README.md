@@ -1,7 +1,7 @@
 
-# Codeine :pill:
+![logoCodeine](https://user-images.githubusercontent.com/80378427/121835005-aeba3680-cd02-11eb-9024-439fa65356a9.png)
 
-![Codeine]("https://github.com/NizarMazlan/Codeine/blob/main/R%20Code/www/logoCodeine.png")
+# Codeine :pill:
 
 This would be our groups' assignment for Introduction to Data Science. Our group is called GiGit, dont ask the reason why we chose that, its just what it is.
 So besikeli, our project is to create a Drug Addict tracker in Malaysia. We will use Shiny Apps to deploy our program that utilized Shiny Server.
@@ -37,9 +37,9 @@ This website is created by us to help Malaysians understand fully situation of d
 * negeriData.csv
 
 ## Rpubs
-- To see the slide presentation just click the link below:
+- To see the slide presentation just click the link:
 [Rpres](https://rpubs.com/assalik/Codeine)
-- To see the Codeine RShiny app just click the link below:
+- To see the Codeine RShiny app just click the link:
 [CodeineApp](https://assalik.shinyapps.io/Codeine/)
 
 ### Resources
