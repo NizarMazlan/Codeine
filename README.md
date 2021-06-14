@@ -42,8 +42,8 @@ command to run if program contains helper info
 Contributors names and contact info
 
 - Aiman Wafiq [@aimanwafiq12](https://github.com/aimanwafiq12)
-- As Salik
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+- As Salik  [@assalik](https://github.com/assalik)
+
 
 ## Version History
 
