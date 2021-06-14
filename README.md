@@ -50,7 +50,6 @@ This website is created by us to help Malaysians understand fully situation of d
 - Wan Sulaiman, W. M. S., Ismail, Z., Wan Sulaiman, W. S., & Muhamat@Kawangit, R. (2021). Self-Control as Predictor of Hope among Drug Addicts in Malaysian Rehabilitation Centers. International Journal of Academic Research in Business and Social Sciences, 11(3). https://doi.org/10.6007/ijarbss/v11-i3/8655
 
 
-
 ## Authors
 
 - Nizar [@NizarMazlan](https://github.com/NizarMazlan)
