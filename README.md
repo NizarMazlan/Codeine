@@ -1,7 +1,7 @@
 
 # Codeine
 
-![Codeine]("https://raw.githubusercontent.com/NizarMazlan/my-drug-hotspot/main/R%20Code/www/logoCodeine.png%22")
+![Codeine]("https://github.com/NizarMazlan/Codeine/blob/main/R%20Code/www/logoCodeine.png")
 
 This would be our groups' assignment for Introduction to Data Science. Our group is called GiGit, dont ask the reason why we chose that, its just what it is.
 So besikeli, our project is to create a Drug Addict tracker in Malaysia. We will use Shiny Apps to deploy our program that utilized Shiny Server.
